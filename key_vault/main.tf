@@ -2,8 +2,8 @@ data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "kv" {
   name                        = var.keyvault_name
-  location                    = azurerm_resource_group.rg.location
-  resource_group_name         = azurerm_resource_group.rg.name
+  location                    = var.location
+  resource_group_name         = var.resource_group
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_enabled         = true
@@ -25,11 +25,17 @@ resource "azurerm_key_vault" "kv" {
   tags = var.tags
 }
 
+data "azurerm_subnet" "subnet" {
+  name                 = var.subnet_name
+  virtual_network_name = var.vnet_name
+  resource_group_name  = var.resource_group
+}
+
 resource "azurerm_private_endpoint" "kv_endpoint" {
   name                = var.keyvault_endpoint
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_subnet.subnet.resource_group_name
-  subnet_id           = azurerm_subnet.subnet.id
+  location            = var.location
+  resource_group_name = var.resource_group
+  subnet_id           = data.azurerm_subnet.subnet.id
 
   private_service_connection {
 

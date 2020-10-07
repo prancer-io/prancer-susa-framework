@@ -1,0 +1,5 @@
+app_service_plan_name = "prancer-app-plan"
+app_service_plan_tier = "Standard"
+app_service_plan_size = "S1"
+resource_group = "prancer-app-rg"
+location       = "eastus2"
