@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "prancer-app-rg"
-  location = "eastus2"
+  name     = var.resource_group
+  location = var.location
 }

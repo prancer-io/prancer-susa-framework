@@ -21,6 +21,10 @@ resource "azurerm_app_service" "app" {
     min_tls_version          = "1.2"
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   connection_string {
     name  = "Database"
     type  = "SQLServer"
