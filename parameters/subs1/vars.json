@@ -1,1 +1,27 @@
-#vars file
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configurationSettings": {
+      "value": {
+        "name": {
+          "env": "company",
+          "subscriptionName": "whitekite",
+          "subscriptionId": "d34d6141-7a19-4458-b0dd-f038bb7760c1",
+          "defaultLocation": "centralus"
+        }
+      }
+    },
+    "terraformSettings": {
+      "value": {
+        "name": {
+          "spn": "terraform-whitekite",
+          "id": "a913eb35-d0a1-4383-8da3-fccca5469ac0",
+          "vault": "azrcterrafkv10",
+          "storage": "azrcterrafstr10",
+          "resourceGroup": "core-terraf-auto-rg"
+        }
+      }
+    }
+  }
+}
