@@ -1,2 +1,2 @@
-resource_group = "prancer-app-rg"
+resource_group = "company-app-rg"
 location       = "eastus2"
