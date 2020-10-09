@@ -1,5 +1,0 @@
-app_service_plan_name = "company-app-plan"
-app_service_plan_tier = "Standard"
-app_service_plan_size = "S1"
-resource_group = "company-app-rg"
-location       = "centralus"

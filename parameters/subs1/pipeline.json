@@ -3,43 +3,7 @@
         {
             "deploymentId": "1",
             "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/resource_group",
-            "deploy": true
-        },
-        {
-            "deploymentId": "2",
-            "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/virtual_network",
-            "deploy": true
-        },
-        {
-            "deploymentId": "3",
-            "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/subnet",
-            "deploy": true
-        },
-        {
-            "deploymentId": "4",
-            "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/sql_server",
-            "deploy": true
-        },
-        {
-            "deploymentId": "5",
-            "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/key_vault",
-            "deploy": true
-        },
-        {
-            "deploymentId": "6",
-            "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/app_service_plan",
-            "deploy": true
-        },
-        {
-            "deploymentId": "7",
-            "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/app_service",
+            "deploymentPath": "subs1/centralus/company_app_service",
             "deploy": true
         }
     ]

@@ -1,8 +1,0 @@
-app_service_name      = "company-app-service"
-app_service_plan_name = "company-app-plan"
-sql_endpoint          = "company-sql-endpoint"
-sql_connection        = "company-sql-connection"
-keyvault_endpoint     = "company-kv-endpoint"
-keyvault_connection   = "company-kv-connection"
-resource_group        = "company-app-rg"
-location              = "centralus"
