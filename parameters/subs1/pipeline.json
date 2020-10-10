@@ -3,7 +3,7 @@
         {
             "deploymentId": "1",
             "deploymentType": "terraform",
-            "deploymentPath": "subs1/centralus/company_app_service",
+            "deploymentPath": "subs1/centralus/appname/company_app_service",
             "deploy": true
         }
     ]

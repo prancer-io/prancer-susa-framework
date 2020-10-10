@@ -1,0 +1,12 @@
+variable "sql_name" {}
+variable "sql_version" {}
+variable "sql_username" {}
+variable "sql_password" {}
+variable "sql_endpoint" {}
+variable "sql_connection" {}
+variable "sql_subresource" {}
+variable "vnet_name" {}
+variable "subnet_name" {}
+variable "resource_group" {}
+variable "location" {}
+variable "tags" {}

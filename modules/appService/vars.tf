@@ -14,6 +14,11 @@ variable "appserviceplan_name" {
   description = "App service plan under which app service will be created."
 }
 
+variable "identity_type" {
+  description = "Identity type"
+  default = "SystemAssigned"
+}
+
 variable "conn_name" {
   description = "The name of the Connection String."
 }
