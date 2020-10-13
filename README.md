@@ -1,9 +1,10 @@
 # terraform-framework
 
-Requirements:
-1. implement new structure
-2. put all the code in modules folder
-3. create build.sh and destroy.sh
+## Dependencies
+ - az cli
+ - terraform
+ - jq
 
-`build.sh sub1 pipeline1.json`
-
+## How to run
+bash build.sh ../parameters/subs1/pipeline.json
+bash build.sh ../parameters/subs1/pipeline.json --destroy # for destroy

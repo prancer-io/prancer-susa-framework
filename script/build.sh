@@ -68,6 +68,9 @@ export CLIENT_ID=$(jq -r .parameters.terraformSettings.value.name.id $PARAM_FILE
 export NAME=$(jq -r .parameters.terraformSettings.value.name.spn $PARAM_FILE)
 export VAULT=$(jq -r .parameters.terraformSettings.value.name.vault $PARAM_FILE)
 
+#change the subscription to the current one
+az account set -s $SUB_ID
+
 # Debugging:
 # echo "TFSTATE_RG        = $TFSTATE_RG"
 # echo "TFSTATE_STORAGE   = $TFSTATE_STORAGE"
