@@ -82,6 +82,7 @@ export VAULT=$(jq -r .parameters.terraformSettings.value.name.vault $PARAM_FILE)
 #
 
 function terraformPrepare {
+    az account set -s "$SUB_ID"
     kv_key=$(getKeyvaultKey $TFSTATE_STORAGE $TFSTATE_RG)
     client_secret=$(getClientSecret "$NAME" "$VAULT")
     tenant_id=$(getTenantId)
