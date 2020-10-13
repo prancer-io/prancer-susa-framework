@@ -85,7 +85,6 @@ az account set -s $SUB_ID
 #
 
 function terraformPrepare {
-    az account set -s "$SUB_ID"
     kv_key=$(getKeyvaultKey $TFSTATE_STORAGE $TFSTATE_RG)
     client_secret=$(getClientSecret "$NAME" "$VAULT")
     tenant_id=$(getTenantId)
