@@ -33,7 +33,19 @@
         {
             "deploymentId": "6",
             "deploymentType": "terraform",
+            "deploymentPath": "sub3/centralus/windows_server_2016/storage_account",
+            "deploy": true
+        },
+        {
+            "deploymentId": "7",
+            "deploymentType": "terraform",
             "deploymentPath": "sub3/centralus/windows_server_2016/windows_vm",
+            "deploy": true
+        },
+        {
+            "deploymentId": "8",
+            "deploymentType": "terraform",
+            "deploymentPath": "sub3/centralus/windows_server_2016/monitor_diagnostic_setting",
             "deploy": true
         }
     ]

@@ -12,3 +12,4 @@ variable "vm_img_publisher" {}
 variable "vm_img_offer" {}
 variable "vm_img_sku" {}
 variable "vm_img_version" {}
+variable "boot_diagnostics_storage" {}

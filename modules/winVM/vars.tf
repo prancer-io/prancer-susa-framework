@@ -54,3 +54,7 @@ variable "vm_img_sku" {
 variable "vm_img_version" {
   description = "Specifies the version of the image used to create the virtual machines."
 }
+
+variable "storage_account_uri"{
+  description = "The Primary/Secondary Endpoint for the Azure Storage Account which should be used to store Boot Diagnostics, including Console Output and Screenshots from the Hypervisor."
+}

@@ -13,6 +13,10 @@ resource "azurerm_windows_virtual_machine" "winvm" {
     storage_account_type = var.vm_disk_storage_type
   }
 
+  boot_diagnostics {
+    storage_account_uri = var.storage_account_uri
+  }
+
   source_image_reference {
     publisher = var.vm_img_publisher
     offer     = var.vm_img_offer
