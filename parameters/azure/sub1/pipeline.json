@@ -1,0 +1,10 @@
+{
+    "deployments": [
+        {
+            "deploymentId": "1",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub1/centralus/appname/company_app_service",
+            "deploy": true
+        }
+    ]
+}

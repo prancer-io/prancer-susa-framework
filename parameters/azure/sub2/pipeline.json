@@ -1,0 +1,40 @@
+{
+    "deployments": [
+        {
+            "deploymentId": "1",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub2/centralus/company_app_service/resource_group",
+            "deploy": true
+        },
+        {
+            "deploymentId": "2",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub2/centralus/company_app_service/virtual_network",
+            "deploy": true
+        },
+        {
+            "deploymentId": "3",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub2/centralus/company_app_service/subnet",
+            "deploy": true
+        },
+        {
+            "deploymentId": "4",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub2/centralus/company_app_service/sql_server",
+            "deploy": true
+        },
+        {
+            "deploymentId": "5",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub2/centralus/company_app_service/key_vault",
+            "deploy": true
+        },
+        {
+            "deploymentId": "6",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub2/centralus/company_app_service/app_service",
+            "deploy": true
+        }
+    ]
+}
