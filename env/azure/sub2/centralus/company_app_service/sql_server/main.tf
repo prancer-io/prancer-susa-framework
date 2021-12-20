@@ -1,5 +1,5 @@
 module "sql_server" {
-  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/sqlServer/"
+  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/sqlServer/"
   location                  = var.location
   server_name               = var.sql_name
   server_rg                 = var.resource_group
@@ -16,7 +16,7 @@ data "azurerm_subnet" "subnet" {
 }
 
 module "sql_endpoint" {
-  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/privateEndpoint/"
+  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/privateEndpoint/"
   name                           = var.sql_endpoint
   location                       = var.location
   resource_group_name            = var.resource_group

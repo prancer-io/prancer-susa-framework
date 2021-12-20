@@ -5,7 +5,7 @@ data "azurerm_subnet" "subnet" {
 }
 
 module "network_interface" {
-  source            = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/netInterface/"
+  source            = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/netInterface/"
   nic_name          = var.nic_name
   location          = var.location
   nic_rg            = var.nic_rg

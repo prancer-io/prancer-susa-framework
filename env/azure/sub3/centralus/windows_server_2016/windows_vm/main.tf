@@ -14,7 +14,7 @@ data "azurerm_storage_account" "diagnostics" {
 }
 
 module "winvm" {
-  source                 = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/winVM/"
+  source                 = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/winVM/"
   vm_name                = var.vm_name
   vm_rg                  = var.vm_rg
   location               = var.location

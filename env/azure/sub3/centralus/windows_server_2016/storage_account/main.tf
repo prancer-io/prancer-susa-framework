@@ -1,5 +1,5 @@
 module "storage_account" {
-  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/storageAccount/"
+  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/storageAccount/"
   storage_count         = var.storage_count
   storage_name          = var.storage_name
   storage_rg_name       = var.storage_rg_name

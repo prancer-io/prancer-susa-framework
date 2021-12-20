@@ -41,9 +41,9 @@ Modify vars.json for Terraform state.
 
 Run (from script directory):
 ```bash
-bash pipeline.sh azure ../parameters/your-subs/pipeline.json --plan    # for plan
+bash susa.sh azure ../parameters/your-subs/pipeline.json --plan    # for plan
 
-bash pipeline.sh azure ../parameters/your-subs/pipeline.json           # for apply
+bash susa.sh azure ../parameters/your-subs/pipeline.json           # for apply
 
-bash pipeline.sh azure ../parameters/your-subs/pipeline.json --destroy # for destroy
+bash susa.sh azure ../parameters/your-subs/pipeline.json --destroy # for destroy
 ```

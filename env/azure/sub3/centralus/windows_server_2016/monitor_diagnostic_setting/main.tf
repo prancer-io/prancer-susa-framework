@@ -9,7 +9,7 @@ data "azurerm_storage_account" "diagnostics" {
 }
 
 module "monitor_diagnostic_setting" {
-  source                   = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/monitorDiagnostics/"
+  source                   = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/monitorDiagnostics/"
   mds_name                 = var.mds_name
   mds_resource_id          = data.azurerm_virtual_machine.win16vm.id
   mds_storage_account      = data.azurerm_storage_account.diagnostics.id

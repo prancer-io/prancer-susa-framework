@@ -1,5 +1,5 @@
 module "key_vault" {
-  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/keyVault/"
+  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/keyVault/"
   name                      = var.keyvault_name
   location                  = var.location
   resourceGroup             = var.resource_group
@@ -14,7 +14,7 @@ data "azurerm_subnet" "subnet" {
 }
 
 module "kv_endpoint" {
-  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/privateEndpoint/"
+  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/privateEndpoint/"
   name                           = var.keyvault_endpoint
   location                       = var.location
   resource_group_name            = var.resource_group

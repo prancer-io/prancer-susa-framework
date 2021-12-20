@@ -1,5 +1,5 @@
 module "availability_set" {
-  source                       = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/availabilitySet/"
+  source                       = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/availabilitySet/"
   av_set_name                  = var.av_set_name
   location                     = var.location
   av_rg_name                   = var.av_rg_name

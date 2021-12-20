@@ -1,5 +1,5 @@
 module "resource_group" {
-  source   = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/resourceGroup"
+  source   = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/resourceGroup"
   name     = var.resource_group
   location = var.location
 
@@ -7,7 +7,7 @@ module "resource_group" {
 }
 
 module "vnet" {
-  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/virtualNetwork/"
+  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/virtualNetwork/"
   location              = var.location
   vnet_name             = var.vnet_name
   vnet_rg               = module.resource_group.name
@@ -17,7 +17,7 @@ module "vnet" {
 }
 
 module "subnet" {
-  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/subnet/"
+  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/subnet/"
   subnet_name           = var.subnet_name
   subnet_rg             = module.resource_group.name
   vnet_name             = module.vnet.vnet_name
@@ -27,7 +27,7 @@ module "subnet" {
 }
 
 module "sql_server" {
-  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/sqlServer/"
+  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/sqlServer/"
   location                  = var.location
   server_name               = var.sql_name
   server_rg                 = module.resource_group.name
@@ -38,7 +38,7 @@ module "sql_server" {
 }
 
 module "sql_endpoint" {
-  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/privateEndpoint/"
+  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/privateEndpoint/"
   name                           = var.sql_endpoint
   location                       = var.location
   resource_group_name            = module.resource_group.name
@@ -49,7 +49,7 @@ module "sql_endpoint" {
 }
 
 module "key_vault" {
-  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/keyVault/"
+  source                    = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/keyVault/"
   name                      = var.keyvault_name
   location                  = var.location
   resourceGroup             = module.resource_group.name
@@ -58,7 +58,7 @@ module "key_vault" {
 }
 
 module "kv_endpoint" {
-  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/privateEndpoint/"
+  source                         = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/privateEndpoint/"
   name                           = var.keyvault_endpoint
   location                       = var.location
   resource_group_name            = module.resource_group.name
@@ -69,7 +69,7 @@ module "kv_endpoint" {
 }
 
 module "app_service_plan" {
-  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/appServicePlan/"
+  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/appServicePlan/"
   appserviceplan_name = var.app_service_plan_name
   location            = var.location
   appservice_rg       = module.resource_group.name
@@ -81,7 +81,7 @@ module "app_service_plan" {
 }
 
 module "app_service" {
-  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/appService/"
+  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/appService/"
   appservice_name     = var.app_service_name
   location            = var.location
   appservice_rg       = module.resource_group.name

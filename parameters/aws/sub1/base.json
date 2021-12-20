@@ -1,0 +1,24 @@
+{
+  "$schema": "",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configurationSettings": {
+      "value": {
+        "name": {
+          "env": "company",
+          "subscriptionName": "test",
+          "subscriptionId": "",
+          "defaultLocation": "eu-west-1"
+        }
+      }
+    },
+    "terraformSettings": {
+      "value": {
+        "name": {
+          "bucket_name": "tfstate-by-maxo",
+          "bucket_region": "eu-west-1"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "deployments": [
+        {
+            "deploymentId": "1",
+            "deploymentType": "terraform",
+            "deploymentPath": "aws/sub1/euwest1/test/vpc-01/",
+            "deploymentTemplate": "aws/vpc",
+            "deploy": true
+        }
+    ]
+}

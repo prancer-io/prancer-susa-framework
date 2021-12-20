@@ -1,5 +1,5 @@
 module "subnet" {
-  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/subnet/"
+  source                = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/subnet/"
   subnet_name           = var.subnet_name
   subnet_rg             = var.resource_group
   vnet_name             = var.vnet_name

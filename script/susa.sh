@@ -230,7 +230,7 @@ terraform {
   backend "s3" {
     bucket = "$TFSTATE_STORAGE"
     key    = "${deploymentPath}/terraform.tfstate"
-    region = "us-east-1"
+    region = "$TFSTATE_REGION"
   }
 }
 EOT

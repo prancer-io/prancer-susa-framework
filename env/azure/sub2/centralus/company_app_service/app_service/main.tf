@@ -1,5 +1,5 @@
 module "app_service_plan" {
-  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/appServicePlan/"
+  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/appServicePlan/"
   appserviceplan_name = var.app_service_plan_name
   location            = var.location
   appservice_rg       = var.resource_group
@@ -21,7 +21,7 @@ data "azurerm_private_endpoint_connection" "kv_endpoint" {
 }
 
 module "app_service" {
-  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//modules/appService/"
+  source              = "git::ssh://git@github.com/prancer-io/prancer-terraform-modules//azure/appService/"
   appservice_name     = var.app_service_name
   location            = var.location
   appservice_rg       = var.resource_group
