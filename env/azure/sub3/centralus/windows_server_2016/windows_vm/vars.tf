@@ -1,0 +1,15 @@
+variable "vm_name" {}
+variable "vm_rg" {}
+variable "location" {}
+variable "vm_size" {}
+variable "vm_availability_set" {}
+variable "vm_admin_user" {}
+variable "vm_admin_pass" {}
+variable "vm_interfaces" {}
+variable "vm_disk_caching" {}
+variable "vm_disk_storage_type" {}
+variable "vm_img_publisher" {}
+variable "vm_img_offer" {}
+variable "vm_img_sku" {}
+variable "vm_img_version" {}
+variable "boot_diagnostics_storage" {}

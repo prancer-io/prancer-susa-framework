@@ -1,0 +1,52 @@
+{
+    "deployments": [
+        {
+            "deploymentId": "1",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/resource_group",
+            "deploy": true
+        },
+        {
+            "deploymentId": "2",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/virtual_network",
+            "deploy": true
+        },
+        {
+            "deploymentId": "3",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/subnet",
+            "deploy": true
+        },
+        {
+            "deploymentId": "4",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/network_interface",
+            "deploy": true
+        },
+        {
+            "deploymentId": "5",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/availability_set",
+            "deploy": true
+        },
+        {
+            "deploymentId": "6",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/storage_account",
+            "deploy": true
+        },
+        {
+            "deploymentId": "7",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/windows_vm",
+            "deploy": true
+        },
+        {
+            "deploymentId": "8",
+            "deploymentType": "terraform",
+            "deploymentPath": "azure/sub3/centralus/windows_server_2016/monitor_diagnostic_setting",
+            "deploy": true
+        }
+    ]
+}

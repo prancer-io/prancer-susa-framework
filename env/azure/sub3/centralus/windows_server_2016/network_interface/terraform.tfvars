@@ -1,0 +1,7 @@
+nic_name          = "win16-nic"
+location          = "centralus"
+nic_rg            = "company-win16-rg"
+ipconf_name       = "internal"
+ipconf_vnet       = "company-win16-vnet"
+ipconf_subnet     = "company-win16-subnet"
+ipconf_allocation = "Dynamic"
