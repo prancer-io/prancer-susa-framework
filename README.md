@@ -1,7 +1,7 @@
 # terraform-framework
 this framework helps you to organize the terraform code for your environment. it gives you the structure to scale to multiple subscriptions and applications
 
-# AZURE SETUP:  
+# AZURE SETUP:
 
 Ensure you have the following created in Azure:
 1. Service Principal for Terraform access
@@ -41,9 +41,30 @@ Modify vars.json for Terraform state.
 
 Run (from script directory):
 ```bash
-bash susa.sh azure ../parameters/your-subs/pipeline.json --plan    # for plan
+bash susa.sh azure ../parameters/azure/your-subs/pipeline.json --plan    # for plan
 
-bash susa.sh azure ../parameters/your-subs/pipeline.json           # for apply
+bash susa.sh azure ../parameters/azure/your-subs/pipeline.json           # for apply
 
-bash susa.sh azure ../parameters/your-subs/pipeline.json --destroy # for destroy
+bash susa.sh azure ../parameters/azure/your-subs/pipeline.json --destroy # for destroy
+```
+
+# AWS SETUP:
+
+Ensure you have the following created in A:
+1. AWS IAM account (AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY)
+  - Export this variables before framework usage:
+```
+export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXX
+export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+2. S3 bucket for Terraform State
+
+Run (from script directory):
+```bash
+bash susa.sh aws ../parameters/aws/your-subs/pipeline.json --plan    # for plan
+
+bash susa.sh aws ../parameters/aws/your-subs/pipeline.json           # for apply
+
+bash susa.sh aws ../parameters/aws/your-subs/pipeline.json --destroy # for destroy
 ```
