@@ -36,6 +36,7 @@ fi
 # Parse arguments
 #
 
+export prancer="disabled"
 export action="build"
 for i in "$@"
 do
@@ -48,6 +49,9 @@ do
             ;;
         --destroy)
             export action="destroy"
+            ;;
+        --sca|-sca)
+            export prancer="enabled"
             ;;
     esac
 done
@@ -386,3 +390,11 @@ do
         echo "skipping ${deploymentType} deployment (${deploymentPath})"
     fi
 done
+
+if [[ "$prancer" == "enabled" && "$action" == "build" ]];then
+    if command -v prancer > /dev/null; then
+        prancer --help
+    else
+        echo "WARN: prancer is enabled but not installed!"
+    fi
+fi
