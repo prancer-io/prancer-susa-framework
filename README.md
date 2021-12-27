@@ -1,4 +1,5 @@
-# terraform-framework
+# Introduction
+Susa, the Security Automation as Code framework, is introduced to check Security Requirements during the process of provisioning cloud infrastructure. The Security Automation as Code engine can deploy the resources to the cloud and can be run upon built-in or user-defined Security Policy containing Security Checklists, Security Templates, and Security Procedures. This secure Cloud Provisioning engine is an Open Source solution for automated Cloud Template provisioning and deployments. Susa provides a Command Line Interface (CLI) based on bash scripting technology which enables users to automate repetitive tasks in DevOps scenarios. Susa framework helps organizations to provide consistency across multiple clouds, projects, and environments deployed via IaC tools such as HashiCorp Terraform.
 this framework helps you to organize the terraform code for your environment. it gives you the structure to scale to multiple subscriptions and applications
 
 # AZURE SETUP:
