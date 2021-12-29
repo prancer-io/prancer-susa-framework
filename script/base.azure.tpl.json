@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configurationSettings": {
+      "value": {
+        "name": {
+          "env": "company_name",
+          "subscriptionName": "%%subs_name%%",
+          "subscriptionId": "%%subs_id%%",
+          "defaultLocation": "%%location%%"
+        }
+      }
+    },
+    "terraformSettings": {
+      "value": {
+        "name": {
+          "spn": "%%spn_name%%",
+          "id": "%%spn_id%%",
+          "vault": "%%kv_name%%",
+          "storage": "%%storage_name%%",
+          "resourceGroup": "%%rg_name%%"
+        }
+      }
+    }
+  }
+}

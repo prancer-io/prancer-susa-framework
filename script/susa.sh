@@ -9,6 +9,9 @@ if [ $# -lt 2 ]; then
     echo "Usage:" >&2
     echo "  Provide cloud and absololute or relative path to deploy dir." >&2
     echo "  $0 azure|aws|gcp ../parameters/azure/sub1/pipeline.json [--destroy|--plan]" >&2
+    echo "" >&2
+    echo "  Setup initial pipeline configuration:" >&2
+    echo "  $0 azure|aws|gcp --config" >&2
     exit 1
 fi
 
@@ -23,13 +26,6 @@ else
     cloud="$1"
     echo "UNKNOWN cloud provider: ${cloud}, aborting..."
     exit 3
-fi
-
-if [ -f "$1" ]; then
-    deploy_file="$1"
-else
-    echo "Pipeline file doesn't exists!"
-    exit 1
 fi
 
 #
@@ -50,26 +46,46 @@ do
         --destroy)
             export action="destroy"
             ;;
+        --config|-config)
+            export action="config"
+            ;;
         --sca|-sca)
             export prancer="enabled"
             ;;
     esac
 done
 
+if [ -f "$1" ]; then
+    deploy_file="$1"
+else
+    if [ "$action" != "config" ]; then
+        echo "Pipeline file doesn't exists!"
+        exit 1
+    fi
+fi
+
 #
 # Export variables
 #
 
-export SCRIPT_APATH=$(echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")")
-export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export PROVIDER_FILE="provider.tf"
-export BACKEND_FILE="backend.tf"
-export COMMON_REPO=$(cd $"$SCRIPT_DIR/../" && pwd)
-export REPO_DIR=$(cd $(echo "$SCRIPT_APATH" | awk -F'/parameters/' '{print $1}') && pwd)
-export ENV_DIR="$REPO_DIR/env"
-export TPL_DIR="$ENV_DIR/provisioners"
-export PARAM_DIR=$(cd ${deploy_file%/*} && pwd)
-export PARAM_FILE="$PARAM_DIR/base.json"
+if [ "$action" == "config" ]; then
+    export REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
+    export ENV_DIR="$REPO_DIR/env"
+    export PARAM_DIR="$REPO_DIR/parameters"
+    export TPL_DIR="$ENV_DIR/provisioners"
+    export PARAM_FILE="base.json"
+else
+    export SCRIPT_APATH=$(echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")")
+    export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+    export PROVIDER_FILE="provider.tf"
+    export BACKEND_FILE="backend.tf"
+    export COMMON_REPO=$(cd $"$SCRIPT_DIR/../" && pwd)
+    export REPO_DIR=$(cd $(echo "$SCRIPT_APATH" | awk -F'/parameters/' '{print $1}') && pwd)
+    export ENV_DIR="$REPO_DIR/env"
+    export TPL_DIR="$ENV_DIR/provisioners"
+    export PARAM_DIR=$(cd ${deploy_file%/*} && pwd)
+    export PARAM_FILE="$PARAM_DIR/base.json"
+fi
 
 # Debugging:
 #echo "SCRIPT_DIR = $SCRIPT_DIR"
@@ -100,13 +116,15 @@ if [ -f "$PARAM_FILE" ]; then
         export DEFAULT_REGION=$(jq -r .parameters.configurationSettings.value.name.defaultLocation $PARAM_FILE)
     fi
 else
-    echo "ERROR: Parameters not defined in $PARAM_FILE"
-    exit 1
+    if [ "$action" != "config" ]; then
+        echo "ERROR: Parameters not defined in $PARAM_FILE"
+        exit 1
+    fi
 fi
 
 if [ "$cloud" == "azure" ]; then
     #change the subscription to the current one
-    if [ "$action" != "prepare" ]; then
+    if [[ "$action" != "prepare" && "$action" != "config" ]]; then
         az account set -s $SUB_ID
     fi
 fi
@@ -300,10 +318,84 @@ function terraformProcessing {
     remove_symlinks
 }
 
+function configureCloud {
+    case $1 in
+        aws)
+            echo "Cloud: AWS"
+            ;;
+        azure)
+            read -p 'What is the subscription name? '    subs_name
+            read -p 'What is the subscription id? '      subs_id
+            read -p 'What is the location? [centralus] ' location
+            read -p 'What is the resource group name? '  rg_name
+            read -p 'What is the keyvault name? '        kv_name
+            read -p 'What is the SPN name? '             spn_name
+            read -p 'What is the SPN id? '               spn_id
+            read -p 'What is the storage name? '         storage_name
+
+            subs_name=$(
+                echo "$subs_name" | tr ' ' '-' | grep -oP "[a-zA-Z0-9\-_\.]" | \
+                    xargs | tr -d ' ' | grep . || echo "undefined"
+            )
+            subs_id=$(
+                echo "$subs_id" | \
+                (grep -oP "[a-fA-F0-9\-]+" || echo "missconfigured") | head -1
+            )
+            location=$(echo "$location" | tr ' ' '-' | grep . || echo "centralus")
+            rg_name=$(echo "$rg_name" | tr ' ' '-' | grep . || echo "undefined")
+            kv_name=$(echo "$kv_name" | tr ' ' '-' | grep . || echo "undefined")
+            spn_name=$(echo "$spn_name" | tr ' ' '-' | grep . || echo "undefined")
+            spn_id=$(echo "$spn_id" | tr ' ' '-' | grep . || echo "undefined")
+            storage_name=$(echo "$storage_name" | tr ' ' '-' | grep . || echo "undefined")
+
+            suffix=$(date | md5sum | cut -c 1-8)
+            echo "  initializing parameters..."
+            param_dir="${REPO_DIR}/parameters/${cloud}/sub-${suffix}"
+            mkdir -p "${param_dir}"
+            cp "${REPO_DIR}/script/base.azure.tpl.json" "${param_dir}/${PARAM_FILE}"
+            cp "${REPO_DIR}/script/pipeline.azure.tpl.json" "${param_dir}/pipeline.json"
+
+            sed -i "s|%%subs_name%%|${subs_name}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%subs_id%%|${subs_id}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%location%%|${location}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%rg_name%%|${rg_name}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%kv_name%%|${kv_name}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%spn_name%%|${spn_name}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%spn_id%%|${spn_id}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%storage_name%%|${storage_name}|g" "${param_dir}/${PARAM_FILE}"
+
+            sed -i "s|%%suffix%%|${suffix}|g" "${param_dir}/pipeline.json"
+            sed -i "s|%%location%%|${location}|g" "${param_dir}/pipeline.json"
+
+            echo "  initializing environment..."
+            env_dir="${ENV_DIR}/${cloud}/sub-${suffix}/${location}/app-${suffix}/resource_group"
+            mkdir -p "${env_dir}"
+            cp "${REPO_DIR}/script/terraform.azure.tpl.tfvars" "${env_dir}/terraform.tfvars"
+
+            sed -i "s|%%suffix%%|${suffix}|g" "${env_dir}/terraform.tfvars"
+            sed -i "s|%%location%%|${location}|g" "${env_dir}/terraform.tfvars"
+
+            echo "  Setup completed successfully! Run pipeline with:"
+            echo "    bash script/susa.sh azure ${param_dir}/pipeline.json --plan"
+            echo "    bash script/susa.sh azure ${param_dir}/pipeline.json"
+            ;;
+        gcp)
+            echo "Cloud: GCP"
+            ;;
+        *)
+            echo "Cloud: Unknown"
+            ;;
+    esac
+}
 
 #
 # Pipeline execute
 #
+
+if [ "$action" == "config" ]; then
+    configureCloud "$cloud"
+    exit 0
+fi
 
 if [ "$action" == "destroy" ]; then
     steps=$(jq -c .deployments[] $deploy_file | tac)
