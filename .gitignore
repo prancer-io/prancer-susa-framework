@@ -2,3 +2,4 @@ provider.secrets
 .terraform
 *.tfstate
 *.tfstate.backup
+*.log

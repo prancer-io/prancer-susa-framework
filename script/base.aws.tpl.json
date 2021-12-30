@@ -5,18 +5,18 @@
     "configurationSettings": {
       "value": {
         "name": {
-          "env": "company",
-          "accountName": "test",
+          "env": "company_name",
+          "accountName": "%%account_name%%",
           "accountId": "",
-          "defaultLocation": "eu-west-1"
+          "defaultLocation": "%%location%%"
         }
       }
     },
     "terraformSettings": {
       "value": {
         "name": {
-          "bucket_name": "tfstate-by-maxo",
-          "bucket_region": "eu-west-1"
+          "bucket_name": "%%bucket_name%%",
+          "bucket_region": "%%bucket_region%%"
         }
       }
     }
