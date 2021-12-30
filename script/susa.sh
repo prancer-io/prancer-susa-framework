@@ -85,6 +85,8 @@ else
     export TPL_DIR="$ENV_DIR/provisioners"
     export PARAM_DIR=$(cd ${deploy_file%/*} && pwd)
     export PARAM_FILE="$PARAM_DIR/base.json"
+    export LOG_DIR="$REPO_DIR/log"
+    export LOG_FILE="$REPO_DIR/log/$(date +%Y-%m-%d-%H-%M-%S).log"
 fi
 
 # Debugging:
@@ -427,6 +429,8 @@ function configureCloud {
 # Pipeline execute
 #
 
+{
+
 if [ "$action" == "config" ]; then
     configureCloud "$cloud"
     exit 0
@@ -525,3 +529,5 @@ if [[ "$prancer" == "enabled" && "$action" == "build" ]];then
         echo "WARN: prancer is enabled but not installed!"
     fi
 fi
+
+} | tee -a "$LOG_FILE"
