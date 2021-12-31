@@ -52,6 +52,22 @@ bash susa.sh azure ../parameters/azure/your-subs/pipeline.json           # for a
 bash susa.sh azure ../parameters/azure/your-subs/pipeline.json --destroy # for destroy
 ```
 
+If you are unfamiliar with `susa` concept, you can run our configurator that will create a cloud configuration and simple pipeline example:
+```
+bash susa.sh azure --config
+```
+You will be asked for the following parameters:
+```
+What is the subscription name?
+What is the subscription id?
+What is the location? [centralus]
+What is the resource group name?
+What is the keyvault name?
+What is the SPN name?
+What is the SPN id?
+What is the storage name?
+```
+
 # AWS SETUP:
 
 Ensure you have the following created in A:
@@ -71,4 +87,16 @@ bash susa.sh aws ../parameters/aws/your-subs/pipeline.json --plan    # for plan
 bash susa.sh aws ../parameters/aws/your-subs/pipeline.json           # for apply
 
 bash susa.sh aws ../parameters/aws/your-subs/pipeline.json --destroy # for destroy
+```
+
+If you are unfamiliar with `susa` concept, you can run our configurator that will create a cloud configuration and simple pipeline example:
+```
+bash susa.sh aws --config
+```
+You will be asked for the following parameters:
+```
+What is the account name?
+What is default region? [us-east-1]
+What is the S3 bucket name?
+What is the S3 bucket region?
 ```
