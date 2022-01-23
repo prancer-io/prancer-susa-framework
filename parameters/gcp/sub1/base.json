@@ -1,0 +1,22 @@
+{
+  "$schema": "",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configurationSettings": {
+      "value": {
+        "name": {
+          "env": "company",
+          "project": "test",
+          "defaultRegion": "us-east1"
+        }
+      }
+    },
+    "terraformSettings": {
+      "value": {
+        "name": {
+          "storage": "prancerbuck001"
+        }
+      }
+    }
+  }
+}

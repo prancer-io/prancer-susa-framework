@@ -74,6 +74,7 @@ if [ "$action" == "config" ]; then
     export PARAM_DIR="$REPO_DIR/parameters"
     export TPL_DIR="$ENV_DIR/provisioners"
     export PARAM_FILE="base.json"
+    export LOG_FILE="/dev/null"
 else
     export SCRIPT_APATH=$(echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")")
     export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
@@ -117,6 +118,11 @@ if [ -f "$PARAM_FILE" ]; then
         export TFSTATE_REGION=$(jq -r .parameters.terraformSettings.value.name.bucket_region $PARAM_FILE)
         export DEFAULT_REGION=$(jq -r .parameters.configurationSettings.value.name.defaultLocation $PARAM_FILE)
         export AWS_DEFAULT_REGION=$DEFAULT_REGION
+    elif [ "$cloud" == "gcp" ]; then
+        export PROJECT=$(jq -r .parameters.configurationSettings.value.name.project $PARAM_FILE)
+        export TFSTATE_STORAGE=$(jq -r .parameters.terraformSettings.value.name.storage $PARAM_FILE)
+        export DEFAULT_REGION=$(jq -r .parameters.configurationSettings.value.name.defaultRegion $PARAM_FILE)
+        export GCP_DEFAULT_REGION=$DEFAULT_REGION
     fi
 else
     if [ "$action" != "config" ]; then
@@ -266,9 +272,8 @@ EOT
 function generateGcpProviderFile {
     provider_template=$(cat <<EOT
 provider "google" {
-  project     = "my-project-id"
-  region      = "us-central1"
-  zone        = "us-central1-c"
+  project     = "${PROJECT}"
+  region      = "${DEFAULT_REGION}"
 }
 EOT
     )
@@ -324,12 +329,12 @@ function terraformProcessing {
 function configureCloud {
     case $1 in
         aws)
-            read -p 'What is the account name? '          account_name
-            read -p 'What is default region? [us-east-1]' location
-            read -p 'What is the S3 bucket name? '        s3_name
-            read -p 'What is the S3 bucket region? '      s3_location
+            read -p 'What is the account name? '           account_name
+            read -p 'What is default region? [us-east-1] ' location
+            read -p 'What is the S3 bucket name? '         s3_name
+            read -p 'What is the S3 bucket region? '       s3_location
 
-            account_name=$(echo "$acocunt_name" | tr ' ' '-' | grep . || echo "undefined")
+            account_name=$(echo "$account_name" | tr ' ' '-' | grep . || echo "undefined")
             location=$(echo "$location" | tr ' ' '-' | grep . || echo "us-east-1")
             s3_name=$(echo "$s3_name" | tr ' ' '-' | grep . || echo "undefined")
             s3_location=$(echo "$s3_location" | tr ' ' '-' | grep . || echo "undefined")
@@ -417,7 +422,39 @@ function configureCloud {
             echo "    bash script/susa.sh azure ${param_dir}/pipeline.json"
             ;;
         gcp)
-            echo "Cloud: GCP"
+            read -p 'What is the GCP project ID? '        project_id
+            read -p 'What is default region? [us-east1] ' location
+            read -p 'What is the GCP bucket name? '       bucket_name
+
+            project_id=$(echo "$project_id" | tr ' ' '-' | grep . || echo "undefined")
+            location=$(echo "$location" | tr ' ' '-' | grep . || echo "us-east1")
+            bucket_name=$(echo "$bucket_name" | tr ' ' '-' | grep . || echo "undefined")
+
+            suffix=$(date | md5sum | cut -c 1-8)
+            echo "  initializing parameters..."
+            param_dir="${REPO_DIR}/parameters/${cloud}/sub-${suffix}"
+            mkdir -p "${param_dir}"
+            cp "${REPO_DIR}/script/base.gcp.tpl.json" "${param_dir}/${PARAM_FILE}"
+            cp "${REPO_DIR}/script/pipeline.gcp.tpl.json" "${param_dir}/pipeline.json"
+
+            sed -i "s|%%project_id%%|${project_id}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%location%%|${location}|g" "${param_dir}/${PARAM_FILE}"
+            sed -i "s|%%bucket_name%%|${bucket_name}|g" "${param_dir}/${PARAM_FILE}"
+
+            sed -i "s|%%suffix%%|${suffix}|g" "${param_dir}/pipeline.json"
+            sed -i "s|%%region%%|${location}|g" "${param_dir}/pipeline.json"
+
+            echo "  initializing environment..."
+            env_dir="${ENV_DIR}/${cloud}/sub-${suffix}/${location}/app-${suffix}/vpc"
+            mkdir -p "${env_dir}"
+            cp "${REPO_DIR}/script/terraform.gcp.tpl.tfvars" "${env_dir}/terraform.tfvars"
+
+            sed -i "s|%%project_id%%|${project_id}|g" "${env_dir}/terraform.tfvars"
+            sed -i "s|%%suffix%%|${suffix}|g" "${env_dir}/terraform.tfvars"
+
+            echo "  Setup completed successfully! Run pipeline with:"
+            echo "    bash script/susa.sh gcp ${param_dir}/pipeline.json --plan"
+            echo "    bash script/susa.sh gcp ${param_dir}/pipeline.json"
             ;;
         *)
             echo "Cloud: Unknown"

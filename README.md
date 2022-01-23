@@ -70,7 +70,7 @@ What is the storage name?
 
 # AWS SETUP:
 
-Ensure you have the following created in A:
+Ensure you have the following created in AWS:
 1. AWS IAM account (AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY)
   - Export this variables before framework usage:
 ```
@@ -99,4 +99,51 @@ What is the account name?
 What is default region? [us-east-1]
 What is the S3 bucket name?
 What is the S3 bucket region?
+```
+
+# GCP SETUP:
+
+Ensure you have the following created in GCP:
+1. GCP IAM account (GOOGLE_APPLICATION_CREDENTIALS)
+  - Export this variable before framework usage for example:
+```
+export GOOGLE_APPLICATION_CREDENTIALS=/home/user/.secrets/account.json
+```
+File `account.json` should looks like:
+```json
+{
+  "type": "service_account",
+  "project_id": "<PROJECT-ID>",
+  "private_key_id": "<KEY-ID>",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n<PRIVATE-KEY>\n-----END PRIVATE KEY-----\n",
+  "client_email": "<SERVICE-ACCOUNT-EMAIL>",
+  "client_id": "<CLIENT-ID>",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/<SERVICE-ACCOUNT-EMAIL>"
+}
+```
+`source`: https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating
+
+2. GCP Storage bucket for Terraform State
+
+Run (from script directory):
+```bash
+bash susa.sh gcp ../parameters/gcp/your-subs/pipeline.json --plan    # for plan
+
+bash susa.sh gcp ../parameters/gcp/your-subs/pipeline.json           # for apply
+
+bash susa.sh gcp ../parameters/gcp/your-subs/pipeline.json --destroy # for destroy
+```
+
+If you are unfamiliar with `susa` concept, you can run our configurator that will create a cloud configuration and simple pipeline example:
+```
+bash susa.sh gcp --config
+```
+You will be asked for the following parameters:
+```
+What is the project ID?
+What is default region? [us-east1]
+What is the GCP bucket name?
 ```
