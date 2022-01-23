@@ -1,0 +1,22 @@
+{
+  "$schema": "",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configurationSettings": {
+      "value": {
+        "name": {
+          "env": "company",
+          "project": "%%project_id%%",
+          "defaultRegion": "%%location%%"
+        }
+      }
+    },
+    "terraformSettings": {
+      "value": {
+        "name": {
+          "storage": "%%bucket_name%%"
+        }
+      }
+    }
+  }
+}
